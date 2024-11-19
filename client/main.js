@@ -20,9 +20,9 @@ import {
 
 /* global clearContents */
 
-const first = getNode('#firstNumber');
-const second = getNode('#secondNumber');
-const result = getNode('.result');
+const first = $('#firstNumber');
+const second = $('#secondNumber');
+const result = $('.result');
 
 function handleInput() {
   const firstValue = Number(first.value);
