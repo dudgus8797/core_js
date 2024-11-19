@@ -11,7 +11,7 @@ import {
   typeError,
   insertLast,
   clearContents,
-} from './lib/dom/index.js';
+} from './lib/index.js';
 // 1. input 선택하기
 // 2. input 이벤트 바인딩
 // 3. input의 value 값 가져오기
