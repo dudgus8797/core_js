@@ -49,18 +49,46 @@ function handleMove({ offsetX: x, offsetY: y }) {
   insertLast(ground, template);
 }
 
-ground.addEventListener('mousemove', handleMove);
+//debounce 너무 많은 이벤트가 발생 할때 글자 쓰다가 멈추면 한번만 실행 (여러번 실행 => 취소됨 => 마지막만 1회만 실행)
 
-//debounce
-const input = getNode('input');
+// function handle(e){
+//   console.log(e);
 
-function handleInput() {
-  if (this.value === 'seonbeom@gmail.com') {
-  }
+// }
+
+ground.addEventListener('mousemove', debounce(handleMove, 100));
+
+function debounce(callback, limit = 500) {
+  let timeout;
+
+  return function (e) {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      callback.call(this, e);
+    }, limit);
+  };
 }
 
-input.addEventListener('input', handleInput);
+//throttle
 
+function handle(e) {
+  console.log(e);
+}
+
+ground.addEventListener('mousemove', throttle(handle, 1000));
+
+function throttle(callback, limit = 500) {
+  let wait = false;
+
+  return function (...args) {
+    if (!wait) {
+      callback.apply(this, args);
+      wait = true;
+      setTimeout(() => (wait = false), limit);
+    }
+  };
+}
 /* 이벤트 추가/제거 --------------------------------------------------------- */
 //HOME을 클릭하면 ABOUT에 이벤트가 사라짐 함수가 같아야 이벤트가 제거 가능하다
 // home.addEventListener('click', () => {
