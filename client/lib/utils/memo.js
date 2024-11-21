@@ -25,6 +25,6 @@ memo('cube', () => document.querySelector('#cube')); // set
 // memo('say', () => 'hello'); // set
 // memo('say', () => 'bye'); // set
 
-console.log(memo('cube'));
+// console.log(memo('cube'));
 
 // <div id="cube"></div>  get
