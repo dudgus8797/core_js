@@ -11,7 +11,10 @@ const END_POINT = 'https://jsonplaceholder.typicode.com/users';
 //JSON.strungify(body) body는 문자열이여야 해서 문자열로 묶음
 //콜백 함수 아규먼츠(인수)를 함수로 던져서 파라미터(인자)받음
 
-//콜백방식
+//콜백방식/* -------------------------------------------- */
+/*                   callback                   */
+/* -------------------------------------------- */
+
 function xhr({
   method = 'GET',
   url = '',
@@ -85,6 +88,7 @@ xhr.put = (url, body, success, fail) => {
     fail,
   });
 };
+
 xhr.delete = (url, success, fail) => {
   xhr({
     method: 'DELETE',
@@ -94,14 +98,19 @@ xhr.delete = (url, success, fail) => {
   });
 };
 
-// xhr.get(
+// xhr.delete(
 //   END_POINT,
 //   (data)=>{
 //     console.log( data );
+//   },
+//   ()=>{
+
 //   }
 // )
 
-//promise
+/* -------------------------------------------- */
+/*                    promise                   */
+/* -------------------------------------------- */
 
 // mixin
 
@@ -116,7 +125,7 @@ const defaultOptions = {
   },
 };
 
-function xhrPromise(options = {}) {
+export function xhrPromise(options = {}) {
   const { method, url, errorMessage, body, headers } = {
     ...defaultOptions,
     ...options,
@@ -153,28 +162,38 @@ function xhrPromise(options = {}) {
 }
 
 // xhrPromise({
-//   method: 'GET',
-//   url: END_POINT,
+//   method:'GET',
+//   url:END_POINT
 // })
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   }); //오류 잡는 구절
+// .then((res)=>{
+//   console.log( res );
+
+// })
+// .catch((err)=>{
+//   console.log( err );
+
+// })
 
 xhrPromise.get = (url) => xhrPromise({ url });
 xhrPromise.post = (url, body) => xhrPromise({ url, body, method: 'POST' });
 xhrPromise.put = (url, body) => xhrPromise({ url, body, method: 'PUT' });
 xhrPromise.delete = (url) => xhrPromise({ url, method: 'DELETE' });
 
-xhrPromise.post(END_POINT, { name: 'tiger', age: 35 }).then((res) => {
-  console.log(res);
-  res.forEach(({ website }) => {
-    const tag = `
-      <div>site : ${website}</div>
-    `;
+// xhrPromise
+//   .get(END_POINT)
+//   .then((res) => {
+//     // console.log(res);
 
-    document.body.insertAdjacentHTML('beforeend', tag);
-  });
-});
+//     res.forEach(({ website }) => {
+//       const tag = `
+//       <div>site : ${website}</div>
+//     `;
+
+//       document.body.insertAdjacentHTML('beforeend', tag);
+//     });
+//   })
+//   .then(() => {})
+//   .catch(() => {});
+
+// xhrPromise.put()
+// xhrPromise.delete()
