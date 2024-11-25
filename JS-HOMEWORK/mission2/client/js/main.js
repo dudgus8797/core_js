@@ -1,5 +1,10 @@
-import { getNode } from '../../../../client/lib/dom/getNode.js';
-import { data } from './data.js';
+import {
+  getNode,
+  addClass,
+  removeClass,
+} from '../../../../client/lib/dom/index.js';
+import data from './data.js';
+import { AudioPlayer } from './audio.js';
 /* 
 
 1. 클릭 이벤트 활성화
@@ -9,35 +14,67 @@ import { data } from './data.js';
 5. 함수 분리
 
 */
-//nav에 있는 li에 접근해서 is-active 추가 하기
-//만약 있다면 is-active 지우기
-const navigation = getNode('.nav');
-const img = getNode('button > li');
+const nav = getNode('.nav');
+const list = [...nav.lastElementChild.children];
+const title = getNode('.nickName');
+const img = getNode('.visual img');
 
-function handler(e) {
-  e.preventDefault();
-  const target = e.target.closest('li');
-  const list = [...this.children];
-  if (!target) return;
-  // list.forEach((li) => li.classList.remove('is-active'));
-  if (target.classList.contains('is-active')) {
-    target.classList.remove('is-active');
-  } else {
-    target.classList.add('is-active');
-  }
-  //data 라는 배열 안에 객체...객체 안에 키와 value가져오기
-  // img.src = `./../assets/${data}.jpeg`;
+const audioList = [];
 
-  // for (let element of data) {
-  //   if(element ){}
-  //}
-  //forEach를 통해서 이름찾기
-  data.forEach((data) => {
-    console.log(data.name);
-    return data.name;
+function createAudioList(data) {
+  data.forEach(({ name }) => {
+    audioList.push(new AudioPlayer(`./assets/audio/${name}.m4a`));
   });
-  target.src = `./assets/${data.name}.jpeg`;
-  target.alt = data.alt;
 }
 
-navigation.addEventListener('click', handler);
+function setName(data) {
+  title.textContent = data.name;
+}
+
+function setBgColor({ target = document.body, colorA, colorB = '#000' }) {
+  target.style.background = `linear-gradient(to bottom, ${colorA}, ${colorB})`;
+}
+
+function setImage(target, data) {
+  // if(target.tagName === 'IMG'){
+  if (target.hasAttribute('src')) {
+    target.src = `./assets/${data.name.toLowerCase()}.jpeg`;
+    target.alt = data.alt;
+  }
+}
+
+function setAudioPlayer(index) {
+  audioList.forEach((sound) => {
+    sound.stop();
+  });
+
+  if (index === 1 || index === 3) {
+    audioList[index].volume = 0.2;
+  }
+
+  audioList[index].play();
+}
+
+function handleNavigationClick(e) {
+  const target = e.target.closest('li');
+
+  if (!target) return;
+
+  const index = target.dataset.index - 1;
+  const source = data[index];
+
+  setName(source);
+  setBgColor({ colorA: source.color[0], colorB: source.color[1] });
+  createAudioList(data);
+  setAudioPlayer(index);
+
+  setImage(img, source);
+
+  const audio = new AudioPlayer(`./assets/audio/${source.name}.m4a`);
+
+  list.forEach((li) => removeClass(li, 'is-active'));
+
+  addClass(target, 'is-active');
+}
+
+nav.addEventListener('click', handleNavigationClick);

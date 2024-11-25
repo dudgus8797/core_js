@@ -1,6 +1,4 @@
-
-
-class AudioPlayer {
+export class AudioPlayer {
   #audio = null;
 
   constructor(source) {
@@ -35,8 +33,7 @@ class AudioPlayer {
     return !this.#audio.paused;
   }
 
-  get time(){
+  get time() {
     return this.#audio.currentTime;
   }
 }
-

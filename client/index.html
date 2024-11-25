@@ -11,14 +11,38 @@
 
     <script src="./main.js" type="module"></script>
   </head>
-  <div class="user-card-list">
+  <body>
+    <div class="create">
+      <button>CREATE</button>
 
-    <h2>User List</h2>
+      <div class="pop">
+        <form action="/">
+          <div>
+            <label for="nameField">name : </label>
+            <input type="text" id="nameField" required />
+          </div>
 
-    <div class="user-card-inner">
-     
+          <div>
+            <label for="emailField">email : </label>
+            <input type="email" id="emailField" required />
+          </div>
+
+          <div>
+            <label for="siteField">website : </label>
+            <input type="text" id="siteField" required />
+          </div>
+
+          <div>
+            <button class="cancel" type="button">취소</button>
+            <button class="done" type="submit">생성</button>
+          </div>
+        </form>
+      </div>
     </div>
+    <div class="user-card-list">
+      <h2>User List</h2>
 
-  </div>
+      <div class="user-card-inner"></div>
+    </div>
   </body>
 </html>
