@@ -72,13 +72,27 @@ tiger.delete = (url, options) => {
   });
 };
 
+// (async function(){
+
+//   const response = await tiger.delete(END_POINT+'/1');
+
+//   console.log(response.data);
+
+// })()
+
 // tiger.get()
 // tiger.put()
 // tiger.delete()
 
-// (async function () {
-//   const response = await tiger.delete(END_POINT + '/1');
-//   console.log(response.data);
-// })();
+function getGeolocation() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition((data) => {
+      const { latitude: lat, longitude: long } = data.coords;
+      resolve({ lat, long });
+    });
+  });
+}
+
+// const data = await getGeolocation();
 
 // console.log( data );
